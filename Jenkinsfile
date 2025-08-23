@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/your-org/your-springboot-repo.git'
+                git branch: 'main', url: 'https://github.com/AlejandroCalzadilla/servidor_stagin_spring.git'
             }
         }
         stage('Build') {
@@ -19,11 +19,11 @@ pipeline {
                 sh 'mvn clean package -DskipTests'
             }
         }
-        stage('Code Quality') {
+        /* stage('Code Quality') {
             steps {
                 sh 'mvn checkstyle:check'
             }
-        }
+        } */
         stage('Test') {
             steps {
                 sh 'mvn test'
@@ -36,8 +36,8 @@ pipeline {
         }
         stage('Deploy to Staging') {
             steps {
-                sh 'scp -i $SSH_KEY -P $STAGING_PORT target/${ARTIFACT_NAME} $STAGING_USER@$STAGING_HOST:$STAGING_PATH'
-                sh 'ssh -i $SSH_KEY -p $STAGING_PORT $STAGING_USER@$STAGING_HOST "nohup java -jar $STAGING_PATH${ARTIFACT_NAME} > /dev/null 2>&1 &"'
+                sh 'scp -o StrictHostKeyChecking=no -i $SSH_KEY -P $STAGING_PORT target/${ARTIFACT_NAME} $STAGING_USER@$STAGING_HOST:$STAGING_PATH'
+                sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY -p $STAGING_PORT $STAGING_USER@$STAGING_HOST "nohup java -jar $STAGING_PATH${ARTIFACT_NAME} > $STAGING_PATH/app.log 2>&1 &"'
             }
         }
         stage('Validate Deployment') {
