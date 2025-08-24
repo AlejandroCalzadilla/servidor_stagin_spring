@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         STAGING_USER = 'staging'
-        STAGING_HOST = 'servidor_stagin'
+        STAGING_HOST = 'servidor-stagin'
         STAGING_PORT = '2222'
         ARTIFACT_NAME = 'demo-0.0.1-SNAPSHOT.jar'
         SSH_KEY = '/var/jenkins_home/.ssh/id_rsa'
@@ -19,11 +19,11 @@ pipeline {
                 sh 'mvn clean package -DskipTests'
             }
         }
-        /* stage('Code Quality') {
+         stage('Code Quality') {
             steps {
                 sh 'mvn checkstyle:check'
             }
-        } */
+        } 
         stage('Test') {
             steps {
                 sh 'mvn test'
