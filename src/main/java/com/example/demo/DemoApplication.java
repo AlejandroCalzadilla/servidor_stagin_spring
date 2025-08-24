@@ -9,12 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DemoApplication {
 
-     /**
+    /**
      * The main entry point for the Spring Boot application.
      * @param args Command line arguments.
      */
-
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         SpringApplication.run(DemoApplication.class, args);
     }
 
